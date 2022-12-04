@@ -1,8 +1,9 @@
+from abstract_test import TaskTest
 import unittest
 from advent_of_code_2022.tasks.task01.task01 import Task01
 
 
-class MainTaskTests(unittest.TestCase):
+class Task01Tests(TaskTest, unittest.TestCase):
     task = Task01()
     known_input = ["1000\n",
                    "2000\n",
@@ -18,9 +19,5 @@ class MainTaskTests(unittest.TestCase):
                    "9000\n",
                    "\n",
                    "10000\n"]
-
-    def test_given_example(self):
-        assert self.task.solve_task(self.known_input) == 24000
-
-    def test_given_bonus_example(self):
-        assert self.task.solve_bonus_task(self.known_input) == 4500
+    known_output = 24000
+    known_bonus_output = 45000
