@@ -10,14 +10,11 @@ class MainTaskTests(unittest.TestCase):
                    "PmmdzqPrVvPwwTWBwg\n",
                    "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\n",
                    "ttgJtRGJQctTZtZT\n",
-                   "CrZsJsPPZsGzwwsLwLmpwMDw\n"]
+                   "CrZsJsPPZsGzwwsLwLmpwMDw"]
 
     def test_given_example(self):
         assert self.task.solve_task(self.known_input) == 157
 
-    def test_letter_value(self):
-        expected_result = list(range(1, 52 + 1))
-        input_list = string.ascii_lowercase + string.ascii_uppercase
-        result = [get_letter_value(x) for x in input_list]
-        assert result == expected_result
+    def test_given_bonus_example(self):
+        assert self.task.solve_bonus_task(self.known_input) == 70
 
