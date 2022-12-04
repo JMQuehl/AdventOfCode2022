@@ -1,9 +1,8 @@
-from definitions import TASKS_DIR, ROOT_DIR
+from advent_of_code_2022.definitions import TASKS_DIR
 import os
 from markdown import markdown
 import webbrowser
 import importlib.util
-import tasks.task02.task02
 
 
 def input_file_exists(task_number: int):
