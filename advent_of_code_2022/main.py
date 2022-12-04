@@ -6,7 +6,8 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", "-t", default="0", type=int, help="Which task to display. Default = 0 for all tasks.")
-    parser.add_argument("--display", "-d", default=False, type=bool, help="Should the task be displayed in a web browser?")
+    parser.add_argument("--display", "-d", default=False, type=bool,
+                        help="Should the task be displayed in a web browser?")
 
     args = parser.parse_args()
 
