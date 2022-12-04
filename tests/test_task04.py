@@ -12,4 +12,4 @@ class Task04Tests(TaskTest, unittest.TestCase):
                    "6-6,4-6\n",
                    "2-6,4-8"]
     known_output = 2
-    known_bonus_output = 0
+    known_bonus_output = 4
