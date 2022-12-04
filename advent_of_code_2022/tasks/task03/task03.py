@@ -33,6 +33,7 @@ class Task03(AdventOfCodeProblem):
     def is_input_valid(self, input_file_content: List[str]):
         for line in input_file_content:
             pure_line = line.replace('\n', '')
-            if not pure_line.isalpha() or not len(line) % 2 != 0:
+            is_alpha = pure_line.isalpha()
+            if not pure_line.isalpha() or not len(pure_line) % 2 == 0:
                 return False
         return True
