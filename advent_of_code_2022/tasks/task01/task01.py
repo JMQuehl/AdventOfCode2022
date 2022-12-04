@@ -21,7 +21,7 @@ class Task01(AdventOfCodeProblem):
                 current_max = max(current_max, current_calories)
                 current_calories = 0
 
-        return current_max
+        return max(current_max, current_calories)
 
     def solve_bonus_task(self, input_file_content: List[str]):
         sorted_calories_list = SortedList()
@@ -32,6 +32,8 @@ class Task01(AdventOfCodeProblem):
             else:
                 sorted_calories_list.add(current_calories)
                 current_calories = 0
+        if current_calories > 0:
+            sorted_calories_list.add(current_calories)
 
         return sorted_calories_list[-1] + sorted_calories_list[-2] + sorted_calories_list[-3]
 
