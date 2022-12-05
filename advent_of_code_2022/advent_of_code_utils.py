@@ -1,4 +1,4 @@
-from advent_of_code_2022.definitions import TASKS_DIR
+from definitions import TASKS_DIR
 import os
 from markdown import markdown
 import webbrowser

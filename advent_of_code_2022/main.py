@@ -1,6 +1,5 @@
-import utils
 import argparse
-from tasks.TaskFactory import create_all_tasks, create_single_task
+from TaskFactory import create_all_tasks, create_single_task
 
 if __name__ == '__main__':
 

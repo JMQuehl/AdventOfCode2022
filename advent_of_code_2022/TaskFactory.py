@@ -1,5 +1,5 @@
 import sys
-import advent_of_code_2022.utils as utils
+import advent_of_code_utils as utils
 
 
 def create_single_task(task_number: int):
