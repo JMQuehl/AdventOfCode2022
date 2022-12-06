@@ -1,5 +1,5 @@
 import string
-from abstract_test import TaskTest
+from tests.abstract_test import TaskTest
 import unittest
 from advent_of_code_2022.tasks.task03.task03 import Task03, get_letter_value
 

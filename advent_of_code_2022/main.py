@@ -1,7 +1,8 @@
 import argparse
 import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from advent_of_code_2022.TaskFactory import create_all_tasks, create_single_task
-
 
 def main() -> int:
     parser = argparse.ArgumentParser()

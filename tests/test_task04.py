@@ -1,4 +1,4 @@
-from abstract_test import TaskTest
+from tests.abstract_test import TaskTest
 import unittest
 from advent_of_code_2022.tasks.task04.task04 import Task04
 
