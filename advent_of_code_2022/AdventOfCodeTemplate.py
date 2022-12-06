@@ -24,9 +24,9 @@ class AdventOfCodeProblem(ABC):
     def is_input_valid(self, input_file_content: List[str]):
         pass
 
-    def print_answer_to_task(self, input_file_content=[], include_bonus_task=True):
+    def print_answer_to_task(self, input_file_content=None, include_bonus_task=True):
         print("Task number %d" % self.task_number)
-        if not input_file_content:
+        if input_file_content is None:
             input_file_content = get_input_data(self.task_number)
 
         if self.is_input_valid(input_file_content):

@@ -1,7 +1,6 @@
 from tests.abstract_test import TaskTest
 import unittest
 from advent_of_code_2022.tasks.task06.task06 import Task06
-import sys
 
 
 class Task06Tests(TaskTest, unittest.TestCase):

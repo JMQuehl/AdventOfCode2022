@@ -122,5 +122,6 @@ class Task05(AdventOfCodeProblem):
                 break
         board = pure_input[0:board_separator_line_index]
         move_instructions = [] if (board_separator_line_index == len(pure_input) - 1) else pure_input[
-                                                                                           board_separator_line_index + 1:]
+                                                                                           board_separator_line_index
+                                                                                           + 1:]
         return is_board_valid(board) and are_move_instructions_valid(move_instructions)
