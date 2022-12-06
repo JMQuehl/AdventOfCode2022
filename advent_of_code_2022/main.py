@@ -1,8 +1,9 @@
 import argparse
-from TaskFactory import create_all_tasks, create_single_task
+import sys
+from advent_of_code_2022.TaskFactory import create_all_tasks, create_single_task
 
-if __name__ == '__main__':
 
+def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", "-t", default="0", type=int, help="Which task to display. Default = 0 for all tasks.")
     parser.add_argument("--display", "-d", default=False, type=bool,
@@ -22,3 +23,8 @@ if __name__ == '__main__':
         task.print_answer_to_task()
         if args.display:
             task.render_description()
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

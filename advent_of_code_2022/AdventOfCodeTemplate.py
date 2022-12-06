@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 import os
-from advent_of_code_utils import get_input_data, render_markdown_file
+from advent_of_code_2022.advent_of_code_utils import get_input_data, render_markdown_file
 
 
 class AdventOfCodeProblem(ABC):

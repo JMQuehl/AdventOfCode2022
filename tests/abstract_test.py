@@ -1,5 +1,6 @@
 from abc import ABC
 from typing import List
+from context import advent_of_code_2022
 from advent_of_code_2022.AdventOfCodeTemplate import AdventOfCodeProblem
 
 
