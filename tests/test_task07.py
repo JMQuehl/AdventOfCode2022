@@ -1,10 +1,11 @@
 from tests.abstract_test import TaskTest
 import unittest
 from advent_of_code_2022.tasks.task07.task07 import Task07
+from advent_of_code_2022.advent_of_code_utils import parse_args
 
 
 class Task07Tests(TaskTest, unittest.TestCase):
-    task = Task07()
+    task = Task07(parse_args([]))
     known_input = ["$ cd /\n",
                    "$ ls\n",
                    "dir a\n",

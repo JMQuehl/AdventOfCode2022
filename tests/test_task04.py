@@ -1,10 +1,11 @@
 from tests.abstract_test import TaskTest
 import unittest
 from advent_of_code_2022.tasks.task04.task04 import Task04
+from advent_of_code_2022.advent_of_code_utils import parse_args
 
 
 class Task04Tests(TaskTest, unittest.TestCase):
-    task = Task04()
+    task = Task04(parse_args([]))
     known_input = ["2-4,6-8\n",
                    "2-3,4-5\n",
                    "5-7,7-9\n",

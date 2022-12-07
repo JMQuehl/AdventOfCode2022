@@ -3,28 +3,40 @@ import os
 from markdown import markdown
 import webbrowser
 import importlib.util
+from typing import List
+import argparse
 
 
-def input_file_exists(task_number: int):
+def parse_args(arguments: List[str]):
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--task", "-t", default="0", type=int, help="Which task to display. Default = 0 for all tasks.")
+    parser.add_argument("--display", "-d", default=False, type=bool,
+                        help="Should the task be displayed in a web browser?")
+    parser.add_argument("--visualize", "-vis", default=True, type=bool,
+                        help="Should the result be visualized (if supported by task)")
+    return parser.parse_args(arguments)
+
+
+def input_file_exists(task_number: int) -> bool:
     return os.path.exists(os.path.join(TASKS_DIR, 'task%02d/input.txt' % task_number))
 
 
-def markdown_file_exists(task_number: int):
+def markdown_file_exists(task_number: int) -> bool:
     return os.path.exists(os.path.join(TASKS_DIR, 'task%02d/task.md' % task_number))
 
 
-def task_exists(task_number: int):
+def task_exists(task_number: int) -> bool:
     return importlib.util.find_spec('tasks.task%02d' % task_number) is not None
 
 
-def highest_task_implemented():
+def highest_task_implemented() -> int:
     i = 1
     while task_exists(i):
         i += 1
     return i - 1
 
 
-def get_input_data(task_number: int):
+def get_input_data(task_number: int) -> List[str]:
     file_name = os.path.join(TASKS_DIR, 'task%02d/input.txt' % task_number)
     if not input_file_exists(task_number):
         raise Exception('file %s not found.' % file_name)

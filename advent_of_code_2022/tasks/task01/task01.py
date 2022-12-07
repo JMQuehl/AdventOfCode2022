@@ -4,8 +4,8 @@ from sortedcontainers import SortedList
 
 
 class Task01(AdventOfCodeProblem):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, args):
+        super().__init__(args)
         self.answer_text = "The elf carrying the most calories carries food with %d calories."
         self.bonus_answer_text = "The three elves carrying the most calories carry in sum food with %d calories."
         self.task_number = 1

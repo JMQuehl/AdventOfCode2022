@@ -34,15 +34,15 @@ class SimpleFileTreeNode:
         self.children.append(new_node)
         return new_node
 
-    def print_files(self, suffix=""):
-        print_string = suffix + "- %s " % self.name
+    def print_files(self, prefix=""):
+        print_string = prefix + "- %s " % self.name
         if self.is_folder:
             print_string += "(dir)"
         else:
             print_string += "(file, size=%d)" % self.size
         print(print_string)
         for child_node in self.children:
-            child_node.print_files(suffix + "  ")
+            child_node.print_files(prefix + "  ")
 
     def traverse(self, target_node_name: str) -> 'SimpleFileTreeNode':
         if target_node_name == "..":
@@ -66,8 +66,8 @@ class Task07(AdventOfCodeProblem):
     file_tree: SimpleFileTreeNode
     folder_list: List[SimpleFileTreeNode]
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, args):
+        super().__init__(args)
         self.answer_text = "The total size of all small folders is: %d."
         self.bonus_answer_text = "The smallest folder that can be deleted to free enough space has size: %d."
         self.task_number = 7
@@ -103,7 +103,10 @@ class Task07(AdventOfCodeProblem):
 
     def solve_task(self, input_file_content: List[str]):
         self.parse_input_to_file_tree(input_file_content)
-        # self.file_tree.print_files() uncomment if you want to visualize the whole file structure
+        if self.args.visualize:
+            print("=====================File System Visualization=====================")
+            self.file_tree.print_files()
+            print("===================================================================")
         return sum([x.size for x in self.folder_list if x.size <= 100000])
 
     def solve_bonus_task(self, input_file_content: List[str]):

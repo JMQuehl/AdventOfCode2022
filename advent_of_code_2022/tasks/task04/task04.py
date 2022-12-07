@@ -11,8 +11,8 @@ def split_input(line: str) -> List[int]:
 
 
 class Task04(AdventOfCodeProblem):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, args):
+        super().__init__(args)
         self.answer_text = 'One range is fully contained in another %d times.'
         self.bonus_answer_text = 'There are %d overlaps in total.'
         self.task_number = 4

@@ -2,10 +2,11 @@ import string
 from tests.abstract_test import TaskTest
 import unittest
 from advent_of_code_2022.tasks.task03.task03 import Task03, get_letter_value
+from advent_of_code_2022.advent_of_code_utils import parse_args
 
 
 class Task03Tests(TaskTest, unittest.TestCase):
-    task = Task03()
+    task = Task03(parse_args([]))
     known_input = ["vJrwpWtwJgWrhcsFMMfFFhFp\n",
                    "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\n",
                    "PmmdzqPrVvPwwTWBwg\n",

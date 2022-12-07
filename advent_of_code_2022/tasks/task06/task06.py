@@ -14,8 +14,8 @@ def find_first_occurrence_of_distinct_letters(input_line: str, length: int):
 
 
 class Task06(AdventOfCodeProblem):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, args):
+        super().__init__(args)
         self.answer_text = "Start of packet marker after character %d."
         self.bonus_answer_text = "Start of message after character %d."
         self.task_number = 6

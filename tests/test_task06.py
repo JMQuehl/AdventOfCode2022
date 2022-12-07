@@ -1,10 +1,11 @@
 from tests.abstract_test import TaskTest
 import unittest
 from advent_of_code_2022.tasks.task06.task06 import Task06
+from advent_of_code_2022.advent_of_code_utils import parse_args
 
 
 class Task06Tests(TaskTest, unittest.TestCase):
-    task = Task06()
+    task = Task06(parse_args([]))
     known_input = ["mjqjpqmgbljsphdztnvjfqwrcgsmlb",
                    "bvwbjplbgvbhsrlpgdmjqwftvncz",
                    "nppdvjthqldpwncqszvftbrmjlhg",

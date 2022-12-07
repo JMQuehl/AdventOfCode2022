@@ -1,24 +1,17 @@
-import argparse
 import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from advent_of_code_2022.TaskFactory import create_all_tasks, create_single_task
-
+from advent_of_code_2022.advent_of_code_utils import parse_args
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--task", "-t", default="0", type=int, help="Which task to display. Default = 0 for all tasks.")
-    parser.add_argument("--display", "-d", default=False, type=bool,
-                        help="Should the task be displayed in a web browser?")
-
-    args = parser.parse_args()
-
+    args = parse_args(sys.argv[1:])
     if args.task == 0:
-        tasks = create_all_tasks()
+        tasks = create_all_tasks(args)
         print("Loading all tasks...")
     else:
-        tasks = [create_single_task(args.task)]
+        tasks = [create_single_task(args.task, args)]
         print("Loading task number %02d" % args.task)
 
     for task in tasks:

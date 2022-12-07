@@ -55,8 +55,8 @@ class Task05(AdventOfCodeProblem):
     current_board: List[deque[str]]
     movement_instructions: List[List[int]]  # each inner list contains 3 numbers (how many, from, to)
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, args):
+        super().__init__(args)
         self.answer_text = 'The top crates have the identifiers: %s'
         self.bonus_answer_text = 'Using the CrateMover9001, the top crates have the identifiers: %s'
         self.task_number = 5
@@ -91,6 +91,10 @@ class Task05(AdventOfCodeProblem):
         for instruction in self.movement_instructions:
             for i in range(instruction[0]):
                 self.current_board[instruction[2] - 1].append(self.current_board[instruction[1] - 1].pop())
+        if self.args.visualize:
+            print("=====================Stack State Visualization=====================")
+            visualize_board(self.current_board)
+            print("===================================================================")
         return_string = ""
         for stack in self.current_board:
             return_string += stack[-1]
@@ -106,6 +110,12 @@ class Task05(AdventOfCodeProblem):
                 stack.append(self.current_board[instruction[1] - 1].pop())
             for item in stack[::-1]:
                 self.current_board[instruction[2] - 1].append(item)
+
+        if self.args.visualize:
+            print("=====================Stack State Visualization=====================")
+            visualize_board(self.current_board)
+            print("===================================================================")
+
         return_string = ""
         for stack in self.current_board:
             return_string += stack[-1]

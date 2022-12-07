@@ -6,11 +6,12 @@ from advent_of_code_2022.advent_of_code_utils import get_input_data, render_mark
 
 class AdventOfCodeProblem(ABC):
 
-    def __init__(self):
+    def __init__(self, args):
         self.answer_text = "The answer to this task is: %s"
         self.bonus_answer_text = "The answer to the bonus task is: %s"
         self.standard_input_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "input.txt")
         self.task_number = 0
+        self.args = args
 
     @abstractmethod
     def solve_task(self, input_file_content: List[str]):

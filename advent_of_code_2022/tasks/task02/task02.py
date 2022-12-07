@@ -12,8 +12,8 @@ def evaluate_game(opponents_input: int, your_input: int):
 
 
 class Task02(AdventOfCodeProblem):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, args):
+        super().__init__(args)
         self.answer_text = 'The sum of all your scores following the assumed strategy is: %d'
         self.bonus_answer_text = 'The sum of all your scores following the intended strategy is: %d'
         self.task_number = 2
