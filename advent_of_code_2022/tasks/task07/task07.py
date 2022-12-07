@@ -16,19 +16,18 @@ class SimpleFileTreeNode:
     is_folder: bool
     name: str
 
+    full_path: str  # unique identifier for each node
+
     def __init__(self, name: str, is_folder=True, size=0, parent=None):
         self.name = name
         self.children = []
         self.is_folder = is_folder
         self.size = size
         self.parent = parent
+        self.full_path = "%s/%s" % (self.parent.full_path, self.name) if self.parent else self.name
+        if self.parent:
+            self.parent._update_folder_size(size)
         # this implementation allows folders to have a size, which is ok in this context and can be used for buffering.
-
-    def get_size(self) -> int:
-        if self.is_folder:
-            return sum([x.get_size() for x in self.children])
-        else:
-            return self.size
 
     def add_child_node(self, name: str, is_folder=True, size=0) -> 'SimpleFileTreeNode':
         new_node = SimpleFileTreeNode(name=name, is_folder=is_folder, size=size, parent=self)
@@ -54,11 +53,13 @@ class SimpleFileTreeNode:
             else:
                 return self.add_child_node(name=target_node_name)
 
-    def get_full_path(self) -> str:
-        return "%s/%s" % (self.parent.get_full_path(), self.name) if self.parent else self.name
+    def _update_folder_size(self, size_diff: int):
+        self.size += size_diff
+        if self.parent:
+            self.parent._update_folder_size(size_diff)
 
     def __eq__(self, other):
-        return self.get_full_path() == other.get_full_path() if isinstance(other, SimpleFileTreeNode) else False
+        return self.full_path == other.full_path if isinstance(other, SimpleFileTreeNode) else False
 
 
 class Task07(AdventOfCodeProblem):
@@ -103,20 +104,16 @@ class Task07(AdventOfCodeProblem):
     def solve_task(self, input_file_content: List[str]):
         self.parse_input_to_file_tree(input_file_content)
         # self.file_tree.print_files() uncomment if you want to visualize the whole file structure
-        return sum([x.get_size() for x in self.folder_list if x.get_size() <= 100000])
+        return sum([x.size for x in self.folder_list if x.size <= 100000])
 
     def solve_bonus_task(self, input_file_content: List[str]):
         self.parse_input_to_file_tree(input_file_content)
         total_space = 70000000
         needed_free_space = 30000000
-        occupied_space = self.file_tree.get_size()
+        occupied_space = self.file_tree.size
         folder_to_delete_min_size = needed_free_space - (total_space - occupied_space)
-
-        def sort_size_key(node: SimpleFileTreeNode):
-            return node.get_size()
-
-        self.folder_list.sort(key=sort_size_key)
-        return [x for x in self.folder_list if x.get_size() >= folder_to_delete_min_size][0].get_size()
+        self.folder_list.sort(key=lambda x: x.size)
+        return [x for x in self.folder_list if x.size >= folder_to_delete_min_size][0].size
 
     def is_input_valid(self, input_file_content: List[str]):
         for line in input_file_content:
