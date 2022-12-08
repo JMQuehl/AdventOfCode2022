@@ -4,9 +4,9 @@ import re
 from collections import deque
 import copy
 
-board_line_re = "((\[[A-Z]\] )|( {4}))*((\[[A-Z]\])|( {3}))\n*"
-index_line_re = "( [1-9] {2})*( [1-9] )\n*"
-instructions_re = "move [1-9][0-9]* from [1-9] to [1-9]\n*"
+board_line_re = "((\[[A-Z]\] )|( {4}))*((\[[A-Z]\])|( {3}))\n?"
+index_line_re = "( [1-9] {2})*( [1-9] )\n?"
+instructions_re = "move [1-9][0-9]* from [1-9] to [1-9]\n?"
 
 
 def is_board_valid(board_input: List[str]):
@@ -26,10 +26,7 @@ def is_board_valid(board_input: List[str]):
 
 
 def are_move_instructions_valid(move_input: List[str]):
-    for line in move_input:
-        if not re.fullmatch(instructions_re, line):
-            return False
-    return True
+    return all([re.fullmatch(instructions_re, line) for line in move_input])
 
 
 def visualize_board(board: List[deque[str]]):

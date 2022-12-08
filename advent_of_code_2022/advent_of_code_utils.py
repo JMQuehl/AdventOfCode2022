@@ -10,9 +10,9 @@ import argparse
 def parse_args(arguments: List[str]):
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", "-t", default="0", type=int, help="Which task to display. Default = 0 for all tasks.")
-    parser.add_argument("--display", "-d", default=False, type=bool,
+    parser.add_argument("--display", "-d", action='store_true',
                         help="Should the task be displayed in a web browser?")
-    parser.add_argument("--visualize", "-vis", default=True, type=bool,
+    parser.add_argument("--visualize", "-vis", action='store_true',
                         help="Should the result be visualized (if supported by task)")
     return parser.parse_args(arguments)
 

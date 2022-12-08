@@ -37,7 +37,4 @@ class Task01(AdventOfCodeProblem):
         return sorted_calories_list[-1] + sorted_calories_list[-2] + sorted_calories_list[-3]
 
     def is_input_valid(self, input_file_content: List[str]):
-        for line in input_file_content:
-            if not line.replace('\n', '').isnumeric() and line != '\n':
-                return False
-        return True
+        return all([line.replace('\n', '').isnumeric() or line == '\n' for line in input_file_content])

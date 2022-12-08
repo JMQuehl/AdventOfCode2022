@@ -119,7 +119,4 @@ class Task07(AdventOfCodeProblem):
         return [x for x in self.folder_list if x.size >= folder_to_delete_min_size][0].size
 
     def is_input_valid(self, input_file_content: List[str]):
-        for line in input_file_content:
-            if not any([re.fullmatch(x, line.replace('\n', '')) for x in valid_res]):
-                return False
-        return True
+        return all([any([re.fullmatch(x, line.replace('\n', '')) for x in valid_res]) for line in input_file_content])

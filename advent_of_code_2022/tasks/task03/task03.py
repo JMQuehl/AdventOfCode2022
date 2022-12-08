@@ -31,8 +31,5 @@ class Task03(AdventOfCodeProblem):
         return current_sum
 
     def is_input_valid(self, input_file_content: List[str]):
-        for line in input_file_content:
-            pure_line = line.replace('\n', '')
-            if not pure_line.isalpha() or not len(pure_line) % 2 == 0:
-                return False
-        return True
+        return all(
+            [line.replace('\n', '').isalpha() and len(line.replace('\n', '')) % 2 == 0 for line in input_file_content])

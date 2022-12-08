@@ -34,8 +34,4 @@ class Task04(AdventOfCodeProblem):
         return number_of_overlaps
 
     def is_input_valid(self, input_file_content: List[str]):
-        for line in input_file_content:
-            pure_line = line.replace('\n', '')
-            if not re.fullmatch("[0-9]+-[0-9]+,[0-9]+-[0-9]+", pure_line):
-                return False
-        return True
+        return all(re.fullmatch("[0-9]+-[0-9]+,[0-9]+-[0-9]+\n?", line) for line in input_file_content)

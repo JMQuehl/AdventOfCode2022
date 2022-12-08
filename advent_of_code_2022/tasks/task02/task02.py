@@ -1,5 +1,8 @@
+import re
+
 from advent_of_code_2022.AdventOfCodeTemplate import AdventOfCodeProblem
 from typing import List
+import re
 
 
 def evaluate_game(opponents_input: int, your_input: int):
@@ -34,15 +37,11 @@ class Task02(AdventOfCodeProblem):
             (opponent_play, intended_goal) = line.split()
             num_opponent = ord(opponent_play) - ord('A') + 1
             num_intended_goal = ord(intended_goal) - ord('Y')  # -1 if loss, 0 if draw, 1 if win
-            num_you = ((
-                                   num_opponent - 1 + num_intended_goal) % 3) + 1  # assigns the numerical value of the intended choice
+            num_you = \
+                ((num_opponent - 1 + num_intended_goal) % 3) + 1  # assigns the numerical value of the intended choice
             your_score += num_you + (num_intended_goal + 1) * 3  # result is already known, so no evaluation necessary
 
         return your_score
 
     def is_input_valid(self, input_file_content: List[str]):
-        for line in input_file_content:
-            split_line = line.split()
-            if not len(split_line) == 2 or split_line[0] not in ['A', 'B', 'C'] or split_line[1] not in ['X', 'Y', 'Z'] :
-                return False
-        return True
+        return all([re.fullmatch("[A-C] [X-Z]\n?", line) for line in input_file_content])
