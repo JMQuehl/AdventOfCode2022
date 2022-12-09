@@ -3,6 +3,9 @@ from typing import List
 import re
 import numpy as np
 from nptyping import NDArray
+# import matplotlib as mpl
+# import matplotlib.pyplot as plt
+
 
 def visualize_history(history: List[NDArray]):
     min_x = min_y = max_x = max_y = 0
@@ -15,7 +18,10 @@ def visualize_history(history: List[NDArray]):
     board = np.zeros((max_x - min_x + 1, max_y - min_y + 1))
     for i in range(len(history)):
         x, y = history[i] - np.asarray([min_x, min_y])
-        board[x][y] = i
+        board[x][y] = i + 1
+    # plt.imshow(board > 0, cmap=mpl.colormaps['binary'])
+    # plt.show()
+    # matplotlib could be used alternatively but it seems overkill right now.
     print(board)
 
 
@@ -24,11 +30,11 @@ class Task09(AdventOfCodeProblem):
 
     def __init__(self, args):
         super().__init__(args)
-        self.answer_text = 'The tail visited %d unique locations.'
-        self.bonus_answer_text = '%d'
+        self.answer_text = 'The tail of a 2 knot rope visits %d unique locations.'
+        self.bonus_answer_text = 'The tail of a 10 knot rope visits %d locations'
         self.task_number = 9
 
-    def parse_head_history(self, input_file_content: List[str]) -> List[NDArray] :
+    def parse_head_history(self, input_file_content: List[str]) -> List[NDArray]:
         current_h = np.asarray((0, 0))
         position_history_h = [current_h]
         for line in input_file_content:
@@ -38,7 +44,6 @@ class Task09(AdventOfCodeProblem):
             position_history_h.extend([current_h + x * direction for x in range(1, number + 1)])
             current_h = position_history_h[-1]
         return position_history_h
-
 
     def follow_head(self, history_h: List[NDArray]) -> List[NDArray]:
         current_pos = history_h[0]

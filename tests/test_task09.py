@@ -5,7 +5,7 @@ from advent_of_code_2022.advent_of_code_utils import parse_args
 
 
 class Task08Tests(TaskTest, unittest.TestCase):
-    task = Task09(parse_args([]))
+    task = Task09(parse_args(["--visualize"]))
     known_input = ["R 4\n",
                    "U 4\n",
                    "L 3\n",
