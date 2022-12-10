@@ -1,5 +1,3 @@
-import re
-
 from advent_of_code_2022.AdventOfCodeTemplate import AdventOfCodeProblem
 from typing import List
 import re
