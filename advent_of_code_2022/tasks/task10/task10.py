@@ -15,7 +15,7 @@ class Task10(AdventOfCodeProblem):
     def __init__(self, args):
         super().__init__(args)
         self.answer_text = 'The sum of the relevant signal strengths is: %d'
-        self.bonus_answer_text = 'The rendered CRT-output is:\n %s'
+        self.bonus_answer_text = 'The rendered CRT-output is:\n%s'
         self.task_number = 10
 
     def parse_input(self, input_file_content: List[str]):
@@ -28,7 +28,7 @@ class Task10(AdventOfCodeProblem):
         output = ''
         for i in range(6):
             for pixel_pos in range(40):
-                output += '#' if abs(self.full_signal[pixel_pos + index_offset] - pixel_pos) < 2 else '.'
+                output += '█' if abs(self.full_signal[pixel_pos + index_offset] - pixel_pos) < 2 else ' '
             output += '\n'
             index_offset += 40
         return output
