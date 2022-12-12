@@ -1,8 +1,5 @@
-import functools
-import operator
-
 from advent_of_code_2022.AdventOfCodeTemplate import AdventOfCodeProblem
-from typing import List, Tuple
+from typing import List, Tuple, Deque
 import re
 from collections import deque
 from operator import mul
@@ -10,7 +7,7 @@ from functools import reduce
 
 
 class Monkey:
-    items: deque[int]
+    items: Deque[int]
     operator_spec: List[str]
     divisibility_check_number: int
     target_monkeys: List[int]
@@ -53,7 +50,7 @@ class Task11(AdventOfCodeProblem):
         split_input = [input_file_content[i:i + 7] for i in range(0, len(input_file_content), 7)]
         monkeys = [Monkey(x) for x in split_input]
         monkey_activity = [0] * len(monkeys)
-        common_multiple = functools.reduce(operator.mul, [x.divisibility_check_number for x in monkeys])
+        common_multiple = reduce(mul, [x.divisibility_check_number for x in monkeys])
         for i in range(number_of_rounds):  # number of rounds
             for j in range(len(monkeys)):
                 monkey_activity[j] += monkeys[j].take_turn(monkeys, feel_relief, common_multiple)

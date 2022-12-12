@@ -1,5 +1,5 @@
 from advent_of_code_2022.AdventOfCodeTemplate import AdventOfCodeProblem
-from typing import List
+from typing import List, Deque
 import re
 from collections import deque
 import copy
@@ -29,7 +29,7 @@ def are_move_instructions_valid(move_input: List[str]):
     return all([re.fullmatch(instructions_re, line) for line in move_input])
 
 
-def visualize_board(board: List[deque[str]]):
+def visualize_board(board: List[Deque[str]]):
     index_str = ""
     for i in range(1, len(board) + 1):
         index_str += " %d  " % i
@@ -48,8 +48,8 @@ def visualize_board(board: List[deque[str]]):
 
 
 class Task05(AdventOfCodeProblem):
-    initial_board: List[deque[str]]
-    current_board: List[deque[str]]
+    initial_board: List[Deque[str]]
+    current_board: List[Deque[str]]
     movement_instructions: List[List[int]]  # each inner list contains 3 numbers (how many, from, to)
 
     def __init__(self, args):

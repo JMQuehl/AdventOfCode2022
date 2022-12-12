@@ -28,7 +28,7 @@ class Task10(AdventOfCodeProblem):
         output = ''
         for i in range(6):
             for pixel_pos in range(40):
-                output += '█' if abs(self.full_signal[pixel_pos + index_offset] - pixel_pos) < 2 else ' '
+                output += '#' if abs(self.full_signal[pixel_pos + index_offset] - pixel_pos) < 2 else '.'
             output += '\n'
             index_offset += 40
         return output
