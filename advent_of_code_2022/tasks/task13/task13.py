@@ -7,8 +7,7 @@ from typing import List
 
 
 def parse_input(input_file_content: List[str]) -> List:
-    input_without_empty_lines = [x.replace('\n', '') for x in input_file_content if x != '\n']
-    return [json.loads(x) for x in input_without_empty_lines]
+    return [json.loads(x) for x in [x.replace('\n', '') for x in input_file_content if x != '\n']]
 
 
 def compare_lists(left, right) -> int:
