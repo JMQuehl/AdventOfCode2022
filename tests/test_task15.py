@@ -22,3 +22,12 @@ class Task05Tests(TaskTest, unittest.TestCase):
                    "Sensor at x=20, y=1: closest beacon is at x=15, y=3"]
     known_output = 26
     known_bonus_output = 0
+
+    def test_given_example(self):
+        self.task.parse_input(self.known_input)
+        assert sum([x[1] - x[0] + 1 for x in self.task.get_impossible_positions(10)])
+
+    def test_given_bonus_example(self):
+        self.task.parse_input(self.known_input)
+        position = self.task.find_possible_position_in_range(20)
+        assert (position[0] * 4000000) + position[1] == 56000011
