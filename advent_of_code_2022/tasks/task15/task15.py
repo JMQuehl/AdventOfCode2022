@@ -6,10 +6,6 @@ from typing import List, Tuple
 class Task15(AdventOfCodeProblem):
     sensor_results: List[Tuple[Tuple[int, int], int]]
     beacon_positions: List[Tuple[int, int]]
-    max_x: int
-    max_y: int
-    min_x: int
-    min_y: int
 
     def __init__(self, args):
         super().__init__(args)
@@ -20,14 +16,9 @@ class Task15(AdventOfCodeProblem):
     def parse_input(self, input_file_content: List[str]):
         self.sensor_results = []
         self.beacon_positions = []
-        self.min_x = self.min_y = self.max_x = self.max_y = 0
         for line in input_file_content:
             scanline = list(map(int, re.findall(r'-?\d+', line)))
             scanned_area = abs(scanline[2] - scanline[0]) + abs(scanline[3] - scanline[1])
-            self.min_x = min(self.min_x, scanline[0] - scanned_area)
-            self.min_y = min(self.min_y, scanline[1] - scanned_area)
-            self.max_x = max(self.max_x, scanline[0] + scanned_area)
-            self.max_y = max(self.max_y, scanline[1] + scanned_area)
             self.sensor_results.append(((scanline[0], scanline[1]), scanned_area))
             self.beacon_positions.append((scanline[2], scanline[3]))
 
