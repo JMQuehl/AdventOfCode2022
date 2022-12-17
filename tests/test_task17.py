@@ -8,4 +8,4 @@ class Task17Tests(TaskTest, unittest.TestCase):
     task = Task17(parse_args(['--visualize']))
     known_input = [">>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>"]
     known_output = 3068
-    known_bonus_output = 0
+    known_bonus_output = 1514285714288
