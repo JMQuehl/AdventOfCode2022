@@ -47,7 +47,8 @@ class Task16(AdventOfCodeProblem):
         while len(can_visit) > 0:
             dist, current_valve = can_visit.pop(0)
             dist_map[current_valve] = dist
-            for neighbor in [x for x in self.valves[current_valve].neighbors if x not in visited]:
+            for neighbor in [x for x in self.valves[current_valve].neighbors if
+                             x not in visited and all([x != y[1] for y in can_visit])]:
                 can_visit.add((dist + 1, neighbor))
             visited.append(current_valve)
         self.distance_maps[valve_id] = dist_map
@@ -72,14 +73,12 @@ class Task16(AdventOfCodeProblem):
     def calc_max_flow_with_two_actors(self, time_left: int):
         all_splits = [x for a in range(len(self.interesting_valves)) for x in combinations(self.interesting_valves, a)]
         max_flow = 0
-        print('checking %d combinations' % (len(all_splits) // 2 + 1))
         for i in range(len(all_splits) // 2 + 1):
             interesting1 = list(chain(all_splits[i]))
             interesting2 = [x for x in self.interesting_valves if x not in all_splits[i]]
             flow1 = self.calc_max_flow('AA', time_left, interesting1)
             flow2 = self.calc_max_flow('AA', time_left, interesting2)
             max_flow = max(max_flow, flow1 + flow2)
-            print('%s and %s generate together %d flow. Current max is: %d' % (str(interesting1), str(interesting2), flow1+flow2, max_flow))
         return max_flow
 
     def solve_task(self, input_file_content: List[str]):
