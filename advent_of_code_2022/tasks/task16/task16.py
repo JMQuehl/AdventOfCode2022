@@ -25,7 +25,7 @@ class Task16(AdventOfCodeProblem):
     def __init__(self, args):
         super().__init__(args)
         self.answer_text = "You can release at most %d pressure."
-        self.bonus_answer_text = "%d"
+        self.bonus_answer_text = "Working together with the elephant, you can release at most %d pressure."
         self.task_number = 16
 
     def parse_input(self, input_file_content: List[str]):
@@ -68,13 +68,80 @@ class Task16(AdventOfCodeProblem):
             max_flow = max(max_flow, self.calc_max_flow(target, time_left - dist_map[target] - 1, list_copy))
         return max_flow + (time_left * self.valves[starting_valve].flow_rate)
 
+    def two_agents_calc_max_flow(self, starting_valve1: str, starting_valve2: str, time_left: int,
+                                 interesting_nodes_left: List[str], time_left_for1, time_left_for2, history1, history2):
+        if time_left <= 0:
+            return 0
+        dist_map1 = self.distance_maps[starting_valve1]
+        dist_map2 = self.distance_maps[starting_valve2]
+        max_flow = 0
+        max_flow = max(max_flow, self.calc_max_flow(starting_valve1, time_left - time_left_for1,
+                                                    interesting_nodes_left))  # from here onwards only 1 acts
+        max_flow = max(max_flow, self.calc_max_flow(starting_valve2, time_left - time_left_for2,
+                                                    interesting_nodes_left))  # from here onwards only 2 acts
+
+        for target1 in interesting_nodes_left:
+            list_copy = list(interesting_nodes_left)
+            list_copy.remove(target1)
+            if time_left_for1 == time_left_for2 == 0:  # both act
+                for target2 in [x for x in interesting_nodes_left if x != target1]:
+                    hist_copy1 = list(history1)
+                    hist_copy2 = list(history2)
+                    list_copy.remove(target2)
+
+                    hist_copy1.append(target1)
+                    hist_copy2.append(target2)
+
+                    time_till_next = min(dist_map1[target1], dist_map2[target2]) + 1
+                    max_flow = max(max_flow,
+                                   self.two_agents_calc_max_flow(target1, target2, time_left - time_till_next,
+                                                                 list_copy,
+                                                                 dist_map1[target1] + 1 - time_till_next,
+                                                                 dist_map2[target2] + 1 - time_till_next, hist_copy1,
+                                                                 hist_copy2))
+            elif time_left_for1 == 0:  # only 1 acts
+
+                hist_copy1 = list(history1)
+                hist_copy2 = list(history2)
+                time_till_next = min(time_left_for2, dist_map1[target1] + 1)
+                hist_copy1.append(target1)
+                max_flow = max(max_flow,
+                               self.two_agents_calc_max_flow(target1, starting_valve2, time_left - time_till_next,
+                                                             list_copy, dist_map1[target1] + 1 - time_till_next,
+                                                             time_left_for2 - time_till_next, hist_copy1, hist_copy2))
+            else:
+
+                hist_copy1 = list(history1)
+                hist_copy2 = list(history2)
+
+                time_till_next = min(time_left_for1, dist_map2[target1] + 1)
+                hist_copy2.append(target1)
+                max_flow = max(max_flow,
+                               self.two_agents_calc_max_flow(starting_valve1, target1, time_left - time_till_next,
+                                                             list_copy, time_left_for1 - time_till_next,
+                                                             dist_map2[target1] + 1 - time_till_next, hist_copy1,
+                                                             hist_copy2))
+
+        if time_left_for1 == time_left_for2 == 0:
+            return max_flow + (
+                    time_left * (self.valves[starting_valve1].flow_rate + self.valves[starting_valve2].flow_rate))
+        elif time_left_for1 == 0:
+            return max_flow + (time_left * self.valves[starting_valve1].flow_rate)
+        else:
+            return max_flow + (time_left * self.valves[starting_valve2].flow_rate)
+
+        # TODO: Debuggen - evtl jeweils eine history für 1 und 2 mitgeben, und gucken, ob der richtige Fall überprüft wird.
+
     def solve_task(self, input_file_content: List[str]):
         self.parse_input(input_file_content)
         self.calculate_distance_maps()
         return self.calc_max_flow('AA', 30, self.interesting_valves)
 
     def solve_bonus_task(self, input_file_content: List[str]):
-        return 0
+        self.parse_input(input_file_content)
+        self.calculate_distance_maps()
+        returnvalue = self.two_agents_calc_max_flow('AA', 'AA', 26, self.interesting_valves, 0, 0, ['AA'], ['AA'])
+        return returnvalue
 
     def is_input_valid(self, input_file_content: List[str]):
         return all(
