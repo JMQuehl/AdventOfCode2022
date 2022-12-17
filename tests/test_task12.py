@@ -4,7 +4,7 @@ from advent_of_code_2022.tasks.task12.task12 import Task12
 from advent_of_code_2022.advent_of_code_utils import parse_args
 
 
-class Task05Tests(TaskTest, unittest.TestCase):
+class Task12Tests(TaskTest, unittest.TestCase):
     task = Task12(parse_args(['--visualize']))
     known_input = ["Sabqponm\n",
                    "abcryxxl\n",

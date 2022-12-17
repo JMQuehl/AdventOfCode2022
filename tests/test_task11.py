@@ -4,7 +4,7 @@ from advent_of_code_2022.tasks.task11.task11 import Task11
 from advent_of_code_2022.advent_of_code_utils import parse_args
 
 
-class Task05Tests(TaskTest, unittest.TestCase):
+class Task11Tests(TaskTest, unittest.TestCase):
     task = Task11(parse_args([]))
     known_input = ["Monkey 0:\n",
                    "  Starting items: 79, 98\n",
