@@ -45,8 +45,10 @@ class Task18(AdventOfCodeProblem):
         candidates = set(get_neighbors(start_coordinate))
         while candidates:
             candidate = candidates.pop()
-            if candidate not in self.coordinates and -2 < candidate[0] <= self.max_values[0] and \
-                    -2 < candidate[1] <= self.max_values[2] and -2 < candidate[2] <= self.max_values[2]:
+            if candidate not in self.coordinates and \
+                    -2 < candidate[0] <= self.max_values[0] and \
+                    -2 < candidate[1] <= self.max_values[1] and \
+                    -2 < candidate[2] <= self.max_values[2]:
                 self.air_coordinates.add(candidate)
                 for x in get_neighbors(candidate):
                     if x not in self.coordinates and x not in self.air_coordinates:
