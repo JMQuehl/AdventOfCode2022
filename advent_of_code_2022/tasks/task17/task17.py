@@ -1,5 +1,3 @@
-import collections
-
 from advent_of_code_2022.AdventOfCodeTemplate import AdventOfCodeProblem
 from typing import List
 import re
@@ -28,7 +26,7 @@ class Task17(AdventOfCodeProblem):
     def __init__(self, args):
         super().__init__(args)
         self.answer_text = 'After 2022 rocks have fallen, the tower is %d units tall.'
-        self.bonus_answer_text = '%d'
+        self.bonus_answer_text = 'After a trillion rocks have fallen, the tower is %d units tall.'
         self.task_number = 17
 
     def shift_block(self, block: NDArray):
@@ -81,9 +79,6 @@ class Task17(AdventOfCodeProblem):
                     block = shifted_block
         self.merge_with(block, max_row)
 
-    def get_surface_area(self):
-        return self.board[-30:]
-
     def parse_input(self, input_file_content):
         self.jet_pattern = input_file_content[0].replace('\n', '')
         self.board = []
@@ -96,36 +91,33 @@ class Task17(AdventOfCodeProblem):
 
     def solve_bonus_task(self, input_file_content: List[str]):
         self.parse_input(input_file_content)
+        target = 1_000_000_000_000
         loop_found = False
+        window_size = 30  # 30 should be enough to give a sufficiently small probability that this heuristic is wrong.
         i = 0
-        last_10_changes = collections.deque()
-        height = 0
-        height_change_list = []
-        height_list = [] # TODO
-        loop_size = start_of_loop = 0
+        height = loop_size = start_of_loop = height_beginning = height_end = 0
+        height_change_string = ''
+        height_list = []
         while not loop_found:
             self.drop_shape(i % len(self.shapes), 3)
-            last_10_changes.append(len(self.board) - height)
-            if len(last_10_changes) > 10:
-                if last_10_changes[-10:] not in height_change_list:
-                    height_change_list.append(last_10_changes[-10:])
-                else:
-                    loop_found = True
-                    start_of_loop = height_change_list.index(last_10_changes[-10:])
-                    loop_size = i - start_of_loop
-                    break
-                last_10_changes.popleft()
-            i += 1
-        size = len(self.board)
-        remaining_steps = (1000000000000 - start_of_loop) % loop_size
+            height_list.append(len(self.board))
+            height_change = height_list[-1] - height
+            height = height_list[-1]
+            last_n_string = height_change_string[-window_size + 1:] + str(height_change)
+            start_of_loop = height_change_string.find(last_n_string)
+            if start_of_loop >= 0:
+                loop_found = True
+                height_beginning = height_list[start_of_loop - 1]
+                height_end = height_list[-window_size - 1]
+                loop_size = len(height_list) - window_size - start_of_loop
+            else:
+                height_change_string += str(height_change)
+                i += 1
 
+        loop_height = height_end - height_beginning
 
-        self.parse_input(input_file_content)
-        common_multiple = len(self.jet_pattern) * len(self.shapes)
-        for i in range(1000000000000):
-            self.drop_shape(i % len(self.shapes), 3)
-            print(len(self.board))
-        return len(self.board)
+        total_height = (((target - start_of_loop) // loop_size) * loop_height) + height_list[((target-1) % loop_size)]
+        return total_height
 
     def is_input_valid(self, input_file_content: List[str]):
         return len(input_file_content) == 1 and re.fullmatch("[<>]+\n?", input_file_content[0])

@@ -9,3 +9,8 @@ class Task17Tests(TaskTest, unittest.TestCase):
     known_input = [">>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>"]
     known_output = 3068
     known_bonus_output = 1514285714288
+
+
+    def test_given_bonus_example(self):
+        secondInstance = Task17(parse_args(['--visualize']))
+        assert secondInstance.solve_bonus_task(self.known_input) == self.known_bonus_output
