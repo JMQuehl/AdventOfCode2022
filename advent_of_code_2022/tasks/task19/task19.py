@@ -3,7 +3,6 @@ from typing import List, Tuple
 import re
 import numpy as np
 from nptyping import NDArray
-from advent_of_code_2022.tasks.task19.solve import solve
 
 
 class Blueprint:
