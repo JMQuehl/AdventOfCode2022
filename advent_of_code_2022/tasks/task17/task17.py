@@ -1,3 +1,5 @@
+import collections
+
 from advent_of_code_2022.AdventOfCodeTemplate import AdventOfCodeProblem
 from typing import List
 import re
@@ -79,6 +81,9 @@ class Task17(AdventOfCodeProblem):
                     block = shifted_block
         self.merge_with(block, max_row)
 
+    def get_surface_area(self):
+        return self.board[-30:]
+
     def parse_input(self, input_file_content):
         self.jet_pattern = input_file_content[0].replace('\n', '')
         self.board = []
@@ -90,7 +95,37 @@ class Task17(AdventOfCodeProblem):
         return len(self.board)
 
     def solve_bonus_task(self, input_file_content: List[str]):
-        return 0
+        self.parse_input(input_file_content)
+        loop_found = False
+        i = 0
+        last_10_changes = collections.deque()
+        height = 0
+        height_change_list = []
+        height_list = [] # TODO
+        loop_size = start_of_loop = 0
+        while not loop_found:
+            self.drop_shape(i % len(self.shapes), 3)
+            last_10_changes.append(len(self.board) - height)
+            if len(last_10_changes) > 10:
+                if last_10_changes[-10:] not in height_change_list:
+                    height_change_list.append(last_10_changes[-10:])
+                else:
+                    loop_found = True
+                    start_of_loop = height_change_list.index(last_10_changes[-10:])
+                    loop_size = i - start_of_loop
+                    break
+                last_10_changes.popleft()
+            i += 1
+        size = len(self.board)
+        remaining_steps = (1000000000000 - start_of_loop) % loop_size
+
+
+        self.parse_input(input_file_content)
+        common_multiple = len(self.jet_pattern) * len(self.shapes)
+        for i in range(1000000000000):
+            self.drop_shape(i % len(self.shapes), 3)
+            print(len(self.board))
+        return len(self.board)
 
     def is_input_valid(self, input_file_content: List[str]):
         return len(input_file_content) == 1 and re.fullmatch("[<>]+\n?", input_file_content[0])
