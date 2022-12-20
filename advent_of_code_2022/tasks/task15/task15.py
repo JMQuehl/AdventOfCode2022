@@ -49,7 +49,7 @@ class Task15(AdventOfCodeProblem):
                     impossible_areas.append(impossible_area)
         return impossible_areas
 
-    def get_impossible_positions(self, row_number: int) -> list[list[int]]:
+    def get_impossible_positions(self, row_number: int) -> List[List[int]]:
         impossible_areas = self.get_impossible_areas(row_number, False)
         beacons_in_line = [x for x in self.beacon_positions if x[1] == row_number]
         beacons_in_areas = []
