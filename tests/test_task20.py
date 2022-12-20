@@ -14,4 +14,4 @@ class Task20Tests(TaskTest, unittest.TestCase):
                    "0\n",
                    "4"]
     known_output = 3
-    known_bonus_output = 0
+    known_bonus_output = 1623178306
