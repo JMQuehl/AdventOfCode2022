@@ -1,21 +1,20 @@
 from advent_of_code_2022.AdventOfCodeTemplate import AdventOfCodeProblem
 from typing import List, Tuple, Dict
 import re
+from sympy import Eq, solve, Symbol
 
 
 class Monkey:
     waiting_for: Tuple[str, str]
-    number: str
     operation: str
     number_monkey: bool
 
     def __init__(self, monkey_string: str):
         nums = re.findall("\d+", monkey_string)
         if nums:
-            self.number = nums[0]
+            self.number = int(nums[0])
             self.number_monkey = True
         else:
-            self.number = -1
             split_string = monkey_string.split()
             self.operation = split_string[-2]
             self.waiting_for = (split_string[-3], split_string[-1])
@@ -23,19 +22,15 @@ class Monkey:
 
     def yell(self, monkey_map: Dict[str, 'Monkey']) -> int:
         if self.number_monkey:
-            return int(self.number)
-        else:
+            return self.number  # in part 2 this might be a sympy symbol and not a number
+        elif self.operation in '+-*/':
             num1 = monkey_map[self.waiting_for[0]].yell(monkey_map)
             num2 = monkey_map[self.waiting_for[1]].yell(monkey_map)
-            assert self.operation in '+-*/=='
             return eval('num1 ' + self.operation + ' num2')
-
-    def give_equation(self, monkey_map: Dict[str, 'Monkey']) -> str:
-        if self.number_monkey:
-            return self.number
-        else:
-            return monkey_map[self.waiting_for[0]].give_equation(monkey_map) + ' ' + self.operation + ' ' + monkey_map[
-                self.waiting_for[1]].give_equation(monkey_map)
+        elif self.operation == '==':
+            num1 = monkey_map[self.waiting_for[0]].yell(monkey_map)
+            num2 = monkey_map[self.waiting_for[1]].yell(monkey_map)
+            return solve(Eq(num1, num2))  # sympy is used for solving the equation.
 
 
 class Task21(AdventOfCodeProblem):
@@ -62,22 +57,9 @@ class Task21(AdventOfCodeProblem):
         you = self.monkey_map['humn']
         root = self.monkey_map['root']
         root.operation = '=='
-        you.number = 'x'
-        print(root.give_equation(self.monkey_map))
-
-        return 0
-        flip = False
-        yell = root.yell(self.monkey_map)
-        while not yell:
-            print('root yelled: %s, checking number: %d' % (yell, you.number))
-            if not flip:
-                you.number = -you.number + 1
-                flip = True
-            else:
-                you.number = -you.number
-                flip = False
-            yell = root.yell(self.monkey_map)
-        return you.number
+        you.number = Symbol('x')
+        solution = int(root.yell(self.monkey_map)[0])
+        return solution
 
     def is_input_valid(self, input_file_content: List[str]):
         return all(
