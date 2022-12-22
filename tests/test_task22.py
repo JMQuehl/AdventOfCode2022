@@ -21,4 +21,4 @@ class Task22Tests(TaskTest, unittest.TestCase):
                    "\n",
                    "10R5L5R10L4R5L5"]
     known_output = 6032
-    known_bonus_output = 0
+    known_bonus_output = 5031
